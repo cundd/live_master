@@ -1,0 +1,53 @@
+plugin.tx_livemaster {
+	view {
+		templateRootPath = {$plugin.tx_livemaster.view.templateRootPath}
+		partialRootPath = {$plugin.tx_livemaster.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_livemaster.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_livemaster.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+	settings {
+		stylesheet = {$plugin.tx_livemaster.settings.stylesheet}
+		variablesFile = {$plugin.tx_livemaster.settings.variablesFile}
+	}
+}
+
+plugin.tx_livemaster._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-live-master table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-live-master table th {
+		font-weight:bold;
+	}
+
+	.tx-live-master table td {
+		vertical-align:top;
+	}
+)
+
+
+
+plugin.CunddAssetic {
+	stylesheets.base = typo3temp/livemaster/live.scss
+
+	filter_for_type {
+		scss = Assetic\Filter\ScssphpFilter
+	}
+}

@@ -1,0 +1,22 @@
+plugin.tx_livemaster {
+	view {
+		# cat=plugin.tx_livemaster/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:live_master/Resources/Private/Templates/
+		# cat=plugin.tx_livemaster/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:live_master/Resources/Private/Partials/
+		# cat=plugin.tx_livemaster/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:live_master/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_livemaster//a; type=string; label=Default storage PID
+		storagePid =
+	}
+
+	settings {
+		# cat=plugin.tx_livemaster/settings; type=string; label=Stylesheet: Path to the stylesheet to load
+    	stylesheet =
+
+		# cat=plugin.tx_livemaster/settings; type=string; label=Variables file: Path to the variables to load
+    	variablesFile =
+	}
+}

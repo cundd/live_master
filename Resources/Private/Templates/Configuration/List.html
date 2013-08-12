@@ -1,0 +1,141 @@
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+<h1>Listing for Configuration</h1>
+
+	<f:flashMessages />
+
+	<style type="text/css">
+		.configuration-data .configuration-data-input {
+			background: transparent;
+			padding: 0;
+			margin: 0;
+			border: 0;
+			color: inherit;
+			cursor: pointer;
+			vertical-align: top;
+			height: auto;
+			width: 70px;
+
+			-webkit-box-shadow: none;
+			   -moz-box-shadow: none;
+			        box-shadow: none;
+
+			position: relative;
+			display: inline-block;
+			/*padding: 0 14px;*/
+
+			-webkit-transition: all 0.6s;
+			   -moz-transition: all 0.6s;
+			        transition: all 0.6s;
+		}
+
+		.configuration-data .configuration-data-input[type=color] {
+			height: 1.5em;
+		}
+		.configuration-data .configuration-data-input:hover {
+			/*background: rgba(255, 234, 204, 0.5);*/
+			-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+			   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+			        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+		}
+		.configuration-data .configuration-data-input:focus {
+			cursor: text;
+			z-index: 100;
+			width: 200px;
+			margin-right: -130px;
+			background: rgba(255, 255, 255, 0.7);
+			/*background: rgba(255, 149, 0, 0.5);*/
+
+			-webkit-transform: translateY(-1px);  /* Chrome, Safari 3.1+ */
+			   -moz-transform: translateY(-1px);  /* Firefox 3.5+ */
+			    -ms-transform: translateY(-1px);  /* IE 9 */
+		    	 -o-transform: translateY(-1px);  /* Opera 10.50-12.00 */
+			        transform: translateY(-1px);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+
+			-webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
+			   -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
+			        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		.configuration-form-button-container {
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			padding: 10px;
+			background: #fff;
+			opacity: 0.8;
+
+			-webkit-transition: all 0.2s;
+			   -moz-transition: all 0.2s;
+			        transition: all 0.2s;
+
+
+			-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+			   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+			        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+
+			-webkit-border-radius: 5px;
+			   -moz-border-radius: 5px;
+			        border-radius: 5px;
+
+
+		}
+		.configuration-form-button-container:hover {
+			opacity: 1.0;
+
+			-webkit-transform: translateY(-3px);  /* Chrome, Safari 3.1+ */
+			   -moz-transform: translateY(-3px);  /* Firefox 3.5+ */
+			    -ms-transform: translateY(-3px);  /* IE 9 */
+			     -o-transform: translateY(-3px);  /* Opera 10.50-12.00 */
+			        transform: translateY(-3px);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+
+			-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+			   -moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+			        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+
+		}
+		.configuration-form-button-container legend {
+			text-transform: uppercase;
+			margin-bottom: 5px;
+			line-height: normal;
+			font-size: 14px;
+			border: none;
+
+		}
+	</style>
+
+	<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> -->
+	<script id="livemaster_js_main" type="text/javascript" src="{f:uri.resource(path: 'JavaScripts/main.js')}"></script>
+
+	<f:render partial="FormErrors" arguments="{object:Configuration}"/>
+
+
+	<div class="configuration-data">
+		<f:for each="{variables}" as="configurationEntry">
+			{configurationEntry.nameSentence} <input type="{configurationEntry.type}" name="{configurationEntry.nameStripped}" value="{configurationEntry.value}" data-changed="0" class="configuration-data-input" />.
+		</f:for>
+	</div>
+
+	<f:form action="update" name="configuration" object="{configuration}" id="configuration">
+		<f:form.hidden property="data" />
+		<div class="configuration-form-button-container">
+			<legend>Live Master</legend>
+			<f:form.submit class="btn configuration-form-button" value="Save configuration" />
+		</div>
+	</f:form>
+
+
+
+</f:section>

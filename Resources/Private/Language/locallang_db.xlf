@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-08-04T14:59:32Z" product-name="live_master">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_livemaster_domain_model_configuration">
+				<source>Configuration</source>
+			</trans-unit>
+			<trans-unit id="tx_livemaster_domain_model_configuration.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_livemaster_domain_model_configuration.data">
+				<source>Data</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
