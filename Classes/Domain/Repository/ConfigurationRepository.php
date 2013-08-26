@@ -1,10 +1,10 @@
 <?php
-namespace Iresults\LiveMaster\Domain\Repository;
+namespace Cundd\LiveMaster\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Corn <cod@iresults.li>, iresults
+ *  (c) 2013 Daniel Corn <info@cundd.net>, cundd
  *  
  *  All rights reserved
  *

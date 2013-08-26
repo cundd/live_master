@@ -1,10 +1,10 @@
 <?php
-namespace Iresults\LiveMaster\Controller;
+namespace Cundd\LiveMaster\Controller;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Corn <cod@iresults.li>, iresults
+ *  (c) 2013 Daniel Corn <info@cundd.net>, cundd
  *
  *  All rights reserved
  *
@@ -41,19 +41,25 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	const VARIABLE_PREFIX = '$';
 
 	/**
+	 * Specifies if the native type should be used for numbers
+	 * @var bool
+	 */
+	protected $useNativeTypeForNumbers = FALSE;
+
+	/**
 	 * configurationRepository
 	 *
-	 * @var \Iresults\LiveMaster\Domain\Repository\ConfigurationRepository
+	 * @var \Cundd\LiveMaster\Domain\Repository\ConfigurationRepository
 	 * @inject
 	 */
 	protected $configurationRepository;
 
 	/**
 	 * Writes the Live Master scss file
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @return bool|int
 	 */
-	public function createScssFileFromConfiguration(\Iresults\LiveMaster\Domain\Model\Configuration $configuration) {
+	public function createScssFileFromConfiguration(\Cundd\LiveMaster\Domain\Model\Configuration $configuration) {
 		// if (!isset($GLOBALS['BE_USER'])
 		// 	|| !isset($GLOBALS['BE_USER']->user)
 		// 	|| !intval($GLOBALS['BE_USER']->user['uid'])) {
@@ -138,6 +144,7 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 					'valueUnparsed'		=> $variableValueUnparsed,
 					'nameSentence'		=> $this->variableNameToSentence($variableNameWithoutDollar),
 					'type'				=> $inputType,
+					'isConfigured'		=> FALSE
 				);
 			} else {
 				// Variable doesn't has to be reassigned
@@ -198,7 +205,7 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 		if ($variableColorValue) {
 			$variableValue = $variableColorValue;
 			$type = 'color';
-		} elseif (is_numeric($variableValue)) {
+		} elseif ($this->useNativeTypeForNumbers && is_numeric($variableValue)) {
 			$type = 'number';
 		}
 		return $type;
@@ -228,7 +235,7 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	 * Merges the variables from the configuration with the variables from the
 	 * given file
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @param $filepath
 	 * @return array
 	 */
@@ -244,6 +251,7 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 				'valueUnparsed'		=> $variableValue,
 				'nameSentence'		=> $this->variableNameToSentence($variableName),
 				'type'				=> $inputType,
+				'isConfigured'		=> TRUE
 			);
 		}
 
@@ -279,31 +287,31 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	/**
 	 * action show
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @return void
 	 */
-	public function showAction(\Iresults\LiveMaster\Domain\Model\Configuration $configuration) {
+	public function showAction(\Cundd\LiveMaster\Domain\Model\Configuration $configuration) {
 		$this->view->assign('configuration', $configuration);
 	}
 
 	/**
 	 * action new
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $newConfiguration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $newConfiguration
 	 * @dontvalidate $newConfiguration
 	 * @return void
 	 */
-	public function newAction(\Iresults\LiveMaster\Domain\Model\Configuration $newConfiguration = NULL) {
+	public function newAction(\Cundd\LiveMaster\Domain\Model\Configuration $newConfiguration = NULL) {
 		$this->view->assign('newConfiguration', $newConfiguration);
 	}
 
 	/**
 	 * action create
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $newConfiguration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $newConfiguration
 	 * @return void
 	 */
-	public function createAction(\Iresults\LiveMaster\Domain\Model\Configuration $newConfiguration) {
+	public function createAction(\Cundd\LiveMaster\Domain\Model\Configuration $newConfiguration) {
 		$this->configurationRepository->add($newConfiguration);
 		$this->flashMessageContainer->add('Your new Configuration was created.');
 		$this->redirect('list');
@@ -312,20 +320,20 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	/**
 	 * action edit
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @return void
 	 */
-	public function editAction(\Iresults\LiveMaster\Domain\Model\Configuration $configuration) {
+	public function editAction(\Cundd\LiveMaster\Domain\Model\Configuration $configuration) {
 		$this->view->assign('configuration', $configuration);
 	}
 
 	/**
 	 * action update
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @return void
 	 */
-	public function updateAction(\Iresults\LiveMaster\Domain\Model\Configuration $configuration) {
+	public function updateAction(\Cundd\LiveMaster\Domain\Model\Configuration $configuration) {
 		$this->configurationRepository->update($configuration);
 		$this->flashMessageContainer->add('Your Configuration was updated.');
 		$this->redirect('list');
@@ -334,10 +342,10 @@ class ConfigurationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCo
 	/**
 	 * action delete
 	 *
-	 * @param \Iresults\LiveMaster\Domain\Model\Configuration $configuration
+	 * @param \Cundd\LiveMaster\Domain\Model\Configuration $configuration
 	 * @return void
 	 */
-	public function deleteAction(\Iresults\LiveMaster\Domain\Model\Configuration $configuration) {
+	public function deleteAction(\Cundd\LiveMaster\Domain\Model\Configuration $configuration) {
 		$this->configurationRepository->remove($configuration);
 		$this->flashMessageContainer->add('Your Configuration was removed.');
 		$this->redirect('list');

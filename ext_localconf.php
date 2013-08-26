@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Iresults.' . $_EXTKEY,
+	'Cundd.' . $_EXTKEY,
 	'Livemaster',
 	array(
 		'Configuration' => 'list, show, new, create, edit, update, delete',

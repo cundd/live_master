@@ -16,30 +16,45 @@
 		return dataObject;
 	};
 
-	jQuery(function () {
-		var configurationForm = jQuery('#configuration');
+	var ConfigurationForm = function () {
+		var _configurationForm = this.configurationForm = jQuery('#configuration'),
+			_configurationFields = this.configurationFields = jQuery('.configuration-data input[data-changed]'),
+			_this = this
+			;
 
-		$('.configuration-data input[data-changed=0]')
-		.on('change',
+		this.resetFocusedField();
+
+		_configurationForm.submit(function () {
+			return _this.submit();
+		});
+
+		_configurationFields
+			.on('change',
 			function () {
-				$(this).attr("data-changed", 1);
+				_this.configurationFieldChanged($(this));
 			})
-		.on('keyup',
-			function (event) {
-				if (event.keyCode === 13) {
-					configurationForm.submit();
-				}
-
+			.on('keydown', function (event) {
+				_this.configurationFieldKeyPress(event, this);
 			})
 		;
-		configurationForm.submit(function () {
-			var	form = $(this), previousData,
-				configurationData = $('.configuration-data input[data-changed=1]').serializeObject(),
+
+		// _configurationFields.parent().append(jQuery('.configuration-data input[data-changed]').first().clone());
+	};
+
+
+	ConfigurationForm.prototype = {
+		Constructor: ConfigurationForm,
+
+		submit: function () {
+			var	form = this.configurationForm, previousData, configurationData,
 				hiddenConfigurationDataField = form.find('[name="tx_livemaster_livemaster[configuration][data]"]'),
 				url = form.attr('action');
 
+			this.configurationFields.filter(':focus').blur();
+
+			configurationData = this.configurationFields.filter('[data-changed="1"]').serializeObject();
+
 			previousData = JSON.parse(hiddenConfigurationDataField.val());
-			configurationData = $('.configuration-data input[data-changed=1]').serializeObject();
 			configurationData = $.extend({}, previousData, configurationData);
 
 			// configuration['tx_livemaster_livemaster[data]'] = JSON.stringify(configuration.data);
@@ -70,6 +85,66 @@
 				});
 			}
 			return false;
-		})
-	});
+		},
+
+		configurationFieldChanged: function (field) {
+			field.attr('data-changed', 1);
+		},
+
+		configurationFieldKeyPress: function (event, element) {
+			var $element = $(element), type = $element.attr('type'), result = false;
+			switch(event.keyCode) {
+				case 13: // Enter
+					this.saveFocusedField($element);
+					this.configurationForm.submit();
+					break;
+
+				case 38: // Up
+					if (type === 'text' && this.changeFieldNumberValue($element)) {
+						$element.change();
+						result = true;
+					}
+					break;
+
+				case 40: // Down
+					if (type === 'text' && this.changeFieldNumberValue($element, true)) {
+						$element.change();
+						result = true;
+					}
+					break;
+			}
+			return result;
+		},
+
+		saveFocusedField: function (focusedField) {
+			localStorage['Cundd.LiveMaster.ConfigurationForm.focusedField'] = focusedField.attr('id');
+		},
+
+		resetFocusedField: function () {
+			if (localStorage['Cundd.LiveMaster.ConfigurationForm.focusedField']) {
+				$('#' + localStorage['Cundd.LiveMaster.ConfigurationForm.focusedField']).focus();
+			}
+		},
+
+		changeFieldNumberValue: function (field, decreaseInsteadOfIncrease) {
+			var value = field.val(), parts, numberValue;
+			if (arguments.length < 2) {
+				decreaseInsteadOfIncrease = false;
+			}
+			parts = value.match(/^(\d+(?:\.\d+)?)(.*)$/);
+			if (parts) {
+				numberValue = parseInt(parts[1]);
+				if (!decreaseInsteadOfIncrease) {
+					numberValue++;
+				} else {
+					numberValue--;
+				}
+				field.val(numberValue + parts[2]);
+				return true;
+			}
+			return false;
+		}
+	};
+
+	window.ConfigurationForm = ConfigurationForm;
 }(jQuery));

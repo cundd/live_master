@@ -1,10 +1,10 @@
 <?php
 
-namespace Iresults\LiveMaster\Tests;
+namespace Cundd\LiveMaster\Tests;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Corn <cod@iresults.li>, iresults
+ *  (c) 2013 Daniel Corn <info@cundd.net>, cundd
  *  			
  *  All rights reserved
  *
@@ -26,7 +26,7 @@ namespace Iresults\LiveMaster\Tests;
  ***************************************************************/
 
 /**
- * Test case for class \Iresults\LiveMaster\Domain\Model\Configuration.
+ * Test case for class \Cundd\LiveMaster\Domain\Model\Configuration.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -35,16 +35,16 @@ namespace Iresults\LiveMaster\Tests;
  * @package TYPO3
  * @subpackage LiveMaster
  *
- * @author Daniel Corn <cod@iresults.li>
+ * @author Daniel Corn <info@cundd.net>
  */
 class ConfigurationTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var \Iresults\LiveMaster\Domain\Model\Configuration
+	 * @var \Cundd\LiveMaster\Domain\Model\Configuration
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new \Iresults\LiveMaster\Domain\Model\Configuration();
+		$this->fixture = new \Cundd\LiveMaster\Domain\Model\Configuration();
 	}
 
 	public function tearDown() {

@@ -1,10 +1,10 @@
 <?php
-namespace Iresults\LiveMaster\Domain\Model;
+namespace Cundd\LiveMaster\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Corn <cod@iresults.li>, iresults
+ *  (c) 2013 Daniel Corn <info@cundd.net>, cundd
  *  
  *  All rights reserved
  *
@@ -58,7 +58,6 @@ class Configuration extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Returns the name
-	 *
 	 * @return \string $name
 	 */
 	public function getName() {
@@ -67,7 +66,6 @@ class Configuration extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Sets the name
-	 *
 	 * @param \string $name
 	 * @return void
 	 */
@@ -77,8 +75,7 @@ class Configuration extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Returns the data
-	 *
-	 * @return \string $data
+	 * @return string
 	 */
 	public function getData() {
 		return $this->data;
@@ -96,11 +93,14 @@ class Configuration extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 			if (!$this->_dataDecoded) {
 				$error = new \UnexpectedValueException($this->getJsonError() . ': "' . $this->data . '"', 1375625105);
 			}
-			\Iresults::pd($this->_dataDecoded);
 		}
 		return $this->_dataDecoded;
 	}
 
+	/**
+	 * Returns a error message for the last JSON error
+	 * @return string
+	 */
 	protected function getJsonError() {
 		$error = '';
 		switch (json_last_error()) {

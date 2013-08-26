@@ -5,7 +5,7 @@
 		<body>
 
 			<trans-unit id="tx_livemaster_domain_model_configuration">
-				<source>Iresults Master configuration</source>
+				<source>Cundd Master configuration</source>
 			</trans-unit>
 			<trans-unit id="tx_livemaster_domain_model_configuration.name">
 				<source>Name</source>
